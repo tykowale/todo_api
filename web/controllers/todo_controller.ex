@@ -24,4 +24,10 @@ defmodule Todos.TodoController do
                 render(conn, "show.html", changeset: changeset)
         end
     end
+
+    def delete(conn, %{"id" => id}) do
+        IO.puts "DELETE HIT!!!!!!"
+        todos = Repo.all(Todo)
+        render(conn, "index.json", todos: todos)
+    end
 end

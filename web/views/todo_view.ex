@@ -13,6 +13,7 @@ defmodule Todos.TodoView do
 
     def todo_json(todo) do
         %{
+            id: todo.id,
             title: todo.title,
             description: todo.description,
             inserted_at: todo.inserted_at,
