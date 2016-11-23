@@ -21,7 +21,8 @@ defmodule Todos.TodoController do
                 conn
                 |> render("show.json", todo: todo)
             {:error, changeset} ->
-                render(conn, "show.json", changeset: changeset)
+                conn
+                |> send_resp(400, [])
         end
     end
 

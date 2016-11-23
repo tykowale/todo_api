@@ -10,6 +10,7 @@ defmodule Todos.TodoViewTest do
 
         assert rendered_todo == %{
             title: todo.title,
+            id: todo.id,
             description: todo.description,
             inserted_at: todo.inserted_at,
             updated_at: todo.updated_at,
