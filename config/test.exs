@@ -17,3 +17,7 @@ config :todos, Todos.Repo,
   database: "todos_test",
   hostname: "localhost",
   pool: Ecto.Adapters.SQL.Sandbox
+
+# Speed up encryption for tests
+config :comeonin, :bcrypt_log_rounds, 4
+config :comeonin, :pbkdf2_rounds, 1
