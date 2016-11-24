@@ -24,5 +24,6 @@ defmodule Todos.Router do
     pipe_through :api
 
     resources "/todos", TodoController , only: [:index, :show, :create, :delete]
+    resources "/users", UserController, only: [:create]
   end
 end

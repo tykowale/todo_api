@@ -30,7 +30,7 @@ defmodule Todos.TodoControllerTest do
 
         conn = post(conn, todo_path(conn, :create, todo), %{todo: todo})
 
-        response_body = response_body_to_map(conn.resp_body)
+        response_body = response_body_to_map(conn.resp_body, "todo")
 
         assert json_response(conn, 200) == render_json(TodoView, "show.json", todo: response_body)
 
@@ -64,13 +64,5 @@ defmodule Todos.TodoControllerTest do
 
         todos = Repo.all(Todos.Todo)
         assert(length(todos) == 0)
-    end
-
-    defp response_body_to_map(resp_body) do
-        response_body = resp_body |> Poison.decode!
-
-        Enum.reduce(Map.keys(response_body["todo"]), %{}, fn(key, acc) ->
-            Map.put(acc, String.to_atom(key), response_body["todo"][key])
-        end )
     end
 end

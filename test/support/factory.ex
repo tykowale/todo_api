@@ -7,4 +7,11 @@ defmodule Todos.Factory do
             description: "List of steps I need to complete"
         }
     end
+
+    def user_factory do
+        %Todos.User{
+          email: "ty@tykowale.com",
+          unencrypted_password: "foobar"
+        }
+    end
 end
