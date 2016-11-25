@@ -38,6 +38,7 @@ defmodule Todos.Mixfile do
      {:comeonin, "~> 2.6"},
      {:gettext, "~> 0.11"},
      {:ex_machina, "~> 1.0"},
+     {:secure_random, "~> 0.5"},
      {:mix_test_watch, "~> 0.2", only: :dev},
      {:phoenix_live_reload, "~> 1.0", only: :dev},
      {:cowboy, "~> 1.0"}]
