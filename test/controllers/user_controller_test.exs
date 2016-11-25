@@ -35,7 +35,7 @@ defmodule Todos.UserControllerTest do
     test "#create renders when resource is valid" do
         conn = build_conn()
 
-        conn = post(conn, user_path(conn, :create, @valid_attrs), %{user: @valid_attrs})
+        conn = post(conn, user_path(conn, :create), %{user: @valid_attrs})
         response_body = response_body_to_map(conn.resp_body, "user")
 
         assert json_response(conn, 200) == render_json(UserView, "show.json", user: response_body)
@@ -48,7 +48,7 @@ defmodule Todos.UserControllerTest do
         conn = build_conn()
         user = %{@valid_attrs | email: ""}
 
-        conn = post(conn, user_path(conn, :create, user), %{user: user})
+        conn = post(conn, user_path(conn, :create), %{user: user})
         assert response(conn, 401) == "There was an error creating your user"
 
         users = Repo.all(User)

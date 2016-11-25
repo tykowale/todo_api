@@ -25,5 +25,6 @@ defmodule Todos.Router do
 
     resources "/todos", TodoController , only: [:index, :show, :create, :delete]
     resources "/users", UserController, only: [:index, :show, :create, :delete]
+    resources "/sessions", SessionController, only: [:create]
   end
 end
