@@ -20,15 +20,15 @@ defmodule Todos.TodoController do
             {:ok , todo} ->
                 conn
                 |> render("show.json", todo: todo)
-            {:error, changeset} ->
+            _ ->
                 conn
                 |> send_resp(400, [])
         end
     end
 
     def delete(conn, %{"id" => id}) do
-        user = Repo.get!(Todo, id)
-        Repo.delete!(user)
+        Repo.get!(Todo, id)
+        |> Repo.delete!
 
         conn
         |> send_resp(204, [])
