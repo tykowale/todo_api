@@ -38,7 +38,7 @@ defmodule Todos.UserControllerTest do
         conn = post(conn, user_path(conn, :create), %{user: @valid_attrs})
         response_body = response_body_to_map(conn.resp_body, "user")
 
-        assert json_response(conn, 200) == render_json(UserView, "show.json", user: response_body)
+        assert json_response(conn, 201) == render_json(UserView, "show.json", user: response_body)
 
         users = Repo.all(User)
         assert(length(users) == 1)

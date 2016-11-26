@@ -13,8 +13,8 @@ defmodule Todos.SessionControllerTest do
         |> Repo.insert
 
         conn = post(conn, session_path(conn, :create), %{user: @valid_attrs})
+        token = json_response(conn, 201)["data"]["token"]
 
-        assert token = json_response(conn, 201)["data"]["token"]
         assert Repo.get_by(Session, token: token)
     end
 

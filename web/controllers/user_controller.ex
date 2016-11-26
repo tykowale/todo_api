@@ -26,6 +26,7 @@ defmodule Todos.UserController do
         case Repo.insert(changeset) do
             {:ok, user} ->
                 conn
+                |> put_status(:created)
                 |> render("show.json", user: user)
             _ ->
                 conn
