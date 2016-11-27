@@ -1,36 +1,46 @@
 defmodule Todos.TodoController do
-    use Todos.Web, :controller
+  use Todos.Web, :controller
 
-    alias Todos.Todo
+  alias Todos.Todo
 
-    def index(conn, _params) do
-        todos = Repo.all(Todo)
-        render(conn, "index.json", todos: todos)
-    end
+  plug :scrub_params, "todo" when action in [:create, :update]
+  plug Todos.Authentication
 
-    def show(conn, %{"id" => id}) do
-        todo = Repo.get!(Todo, id)
-        render(conn, "show.json", todo: todo)
-    end
+  def index(conn, _params) do
+    user_id = conn.assigns.current_user.id
+    query = from t in Todo, where: t.owner_id == ^user_id
+    todos = Repo.all(query)
 
-    def create(conn, %{"todo" => todo_params}) do
-        changeset = Todo.changeset(%Todo{}, todo_params)
+    render(conn, "index.json", todos: todos)
+  end
 
-        case Repo.insert(changeset) do
-            {:ok , todo} ->
-                conn
-                |> render("show.json", todo: todo)
-            _ ->
-                conn
-                |> send_resp(400, [])
-        end
-    end
+  # def show(conn, %{"id" => id}) do
+  #   todo = Repo.get!(Todo, id)
+  #   render(conn, "show.json", todo: todo)
+  # end
 
-    def delete(conn, %{"id" => id}) do
-        Repo.get!(Todo, id)
-        |> Repo.delete!
+  def create(conn, %{"todo" => todo_params}) do
+    changeset = Todo.changeset(
+      %Todo{ owner_id: conn.assigns.current_user.id },
+      todo_params
+    )
 
+    case Repo.insert(changeset) do
+      {:ok , todo} ->
         conn
-        |> send_resp(204, [])
+        |> put_status(:created)
+        |> render("show.json", todo: todo)
+      _ ->
+        conn
+        |> send_resp(401, "Didn't work :(")
     end
+  end
+
+  # def delete(conn, %{"id" => id}) do
+  #   Repo.get!(Todo, id)
+  #   |> Repo.delete!
+
+  #   conn
+  #   |> send_resp(204, [])
+  # end
 end
